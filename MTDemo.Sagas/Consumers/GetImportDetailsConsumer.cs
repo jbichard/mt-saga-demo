@@ -12,8 +12,8 @@ namespace MTDemo.Sagas.Consumers
 			await Task.Delay(2000);
 
 			// Process survey import data and extract question and condition ids
-			var sendEnpoint = await context.GetSendEndpoint(new Uri("queue:SurveyImportState"));
-			await sendEnpoint.Send<ImportDetailsResponse>(new()
+
+			await context.Publish<ImportDetailsResponse>(new()
 			{
 				SurveyImportId = context.Message.SurveyImportId,
 				QuestionIds = ["Q1", "Q2", "Q3"],
