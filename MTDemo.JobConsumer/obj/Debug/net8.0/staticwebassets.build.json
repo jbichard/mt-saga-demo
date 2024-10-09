@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "wzq5XW4P+Ph5f3jWck9nFPO1r3xQ6zc+ciYN07hrnxw=",
+  "Source": "MTDemo.JobConsumer",
+  "BasePath": "_content/MTDemo.JobConsumer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

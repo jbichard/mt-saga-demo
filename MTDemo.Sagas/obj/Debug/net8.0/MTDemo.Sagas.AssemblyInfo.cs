@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MTDemo.Sagas")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20f8fb0bda017537838607f6ba990537bd0c8ce1")]
 [assembly: System.Reflection.AssemblyProductAttribute("MTDemo.Sagas")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MTDemo.Sagas")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

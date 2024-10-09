@@ -228,3 +228,4 @@ C:\temp\mt-saga-demo\MTDemo.Sagas\obj\Debug\net8.0\scopedcss\bundle\MTDemo.Sagas
 C:\temp\mt-saga-demo\MTDemo.Sagas\obj\Debug\net8.0\MTDemo.S.F75027B9.Up2Date
 C:\temp\mt-saga-demo\MTDemo.Sagas\obj\Debug\net8.0\MTDemo.Sagas.genruntimeconfig.cache
 C:\temp\mt-saga-demo\MTDemo.Sagas\obj\Debug\net8.0\ref\MTDemo.Sagas.dll
+C:\temp\mt-saga-demo\MTDemo.Sagas\obj\Debug\net8.0\MTDemo.Sagas.sourcelink.json

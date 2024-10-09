@@ -1,5 +1,0 @@
-C:\Users\52146\source\repos\MTDemo.Sagas\MTDemo.StateMachineDemo\obj\Debug\net8.0\MTDemo.StateMachineDemo.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\52146\source\repos\MTDemo.Sagas\MTDemo.StateMachineDemo\obj\Debug\net8.0\MTDemo.StateMachineDemo.AssemblyInfoInputs.cache
-C:\Users\52146\source\repos\MTDemo.Sagas\MTDemo.StateMachineDemo\obj\Debug\net8.0\MTDemo.StateMachineDemo.AssemblyInfo.cs
-C:\Users\52146\source\repos\MTDemo.Sagas\MTDemo.StateMachineDemo\obj\Debug\net8.0\MTDemo.StateMachineDemo.csproj.CoreCompileInputs.cache
-C:\Users\52146\source\repos\MTDemo.Sagas\MTDemo.StateMachineDemo\obj\Debug\net8.0\MTDemo.StateMachineDemo.MvcApplicationPartsAssemblyInfo.cache
