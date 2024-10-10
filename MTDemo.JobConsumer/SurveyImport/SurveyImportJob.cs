@@ -1,4 +1,7 @@
 ﻿namespace MTDemo.JobConsumer.SurveyImport
 {
-	public record SurveyImportJob(Guid SurveyImportId);
+	public class SurveyImportJob
+	{
+		public Guid SurveyImportId { get; set; }
+	}
 }

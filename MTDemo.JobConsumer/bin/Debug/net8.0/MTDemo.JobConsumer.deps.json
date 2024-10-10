@@ -13,7 +13,7 @@
           "MassTransit.EntityFrameworkCore": "8.2.5",
           "MassTransit.RabbitMQ": "8.2.5",
           "Microsoft.EntityFrameworkCore.Design": "8.0.10",
-          "Oracle.EntityFrameworkCore": "8.23.60",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.8",
           "Serilog": "4.0.2",
           "Serilog.AspNetCore": "8.0.2"
         },
@@ -517,29 +517,28 @@
           }
         }
       },
-      "Oracle.EntityFrameworkCore/8.23.60": {
+      "Npgsql/8.0.4": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "8.0.10",
-          "Oracle.ManagedDataAccess.Core": "23.6.0"
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.2"
         },
         "runtime": {
-          "lib/net8.0/Oracle.EntityFrameworkCore.dll": {
-            "assemblyVersion": "8.0.23.1",
-            "fileVersion": "8.0.23.1"
+          "lib/net8.0/Npgsql.dll": {
+            "assemblyVersion": "8.0.4.0",
+            "fileVersion": "8.0.4.0"
           }
         }
       },
-      "Oracle.ManagedDataAccess.Core/23.6.0": {
+      "Npgsql.EntityFrameworkCore.PostgreSQL/8.0.8": {
         "dependencies": {
-          "System.Diagnostics.PerformanceCounter": "8.0.0",
-          "System.DirectoryServices.Protocols": "8.0.0",
-          "System.Formats.Asn1": "8.0.1",
-          "System.Security.Cryptography.Pkcs": "8.0.0"
+          "Microsoft.EntityFrameworkCore": "8.0.10",
+          "Microsoft.EntityFrameworkCore.Abstractions": "8.0.10",
+          "Microsoft.EntityFrameworkCore.Relational": "8.0.10",
+          "Npgsql": "8.0.4"
         },
         "runtime": {
-          "lib/net8.0/Oracle.ManagedDataAccess.dll": {
-            "assemblyVersion": "23.1.0.0",
-            "fileVersion": "23.1.0.0"
+          "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
+            "assemblyVersion": "8.0.8.0",
+            "fileVersion": "8.0.8.0"
           }
         }
       },
@@ -738,75 +737,7 @@
           }
         }
       },
-      "System.Configuration.ConfigurationManager/8.0.0": {
-        "dependencies": {
-          "System.Diagnostics.EventLog": "8.0.0",
-          "System.Security.Cryptography.ProtectedData": "8.0.0"
-        },
-        "runtime": {
-          "lib/net8.0/System.Configuration.ConfigurationManager.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        }
-      },
       "System.Diagnostics.DiagnosticSource/8.0.0": {},
-      "System.Diagnostics.EventLog/8.0.0": {},
-      "System.Diagnostics.PerformanceCounter/8.0.0": {
-        "dependencies": {
-          "System.Configuration.ConfigurationManager": "8.0.0"
-        },
-        "runtime": {
-          "lib/net8.0/System.Diagnostics.PerformanceCounter.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/win/lib/net8.0/System.Diagnostics.PerformanceCounter.dll": {
-            "rid": "win",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        }
-      },
-      "System.DirectoryServices.Protocols/8.0.0": {
-        "runtime": {
-          "lib/net8.0/System.DirectoryServices.Protocols.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/linux/lib/net8.0/System.DirectoryServices.Protocols.dll": {
-            "rid": "linux",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          },
-          "runtimes/osx/lib/net8.0/System.DirectoryServices.Protocols.dll": {
-            "rid": "osx",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          },
-          "runtimes/win/lib/net8.0/System.DirectoryServices.Protocols.dll": {
-            "rid": "win",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        }
-      },
-      "System.Formats.Asn1/8.0.1": {
-        "runtime": {
-          "lib/net8.0/System.Formats.Asn1.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.724.31311"
-          }
-        }
-      },
       "System.IO.Pipelines/6.0.3": {},
       "System.Memory/4.5.5": {},
       "System.Reflection.Metadata/6.0.1": {
@@ -815,19 +746,6 @@
         }
       },
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
-      "System.Security.Cryptography.Pkcs/8.0.0": {
-        "dependencies": {
-          "System.Formats.Asn1": "8.0.1"
-        }
-      },
-      "System.Security.Cryptography.ProtectedData/8.0.0": {
-        "runtime": {
-          "lib/net8.0/System.Security.Cryptography.ProtectedData.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        }
-      },
       "System.Text.Encoding.CodePages/6.0.0": {
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
@@ -1087,19 +1005,19 @@
       "path": "mono.texttemplating/2.2.1",
       "hashPath": "mono.texttemplating.2.2.1.nupkg.sha512"
     },
-    "Oracle.EntityFrameworkCore/8.23.60": {
+    "Npgsql/8.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-+qjaELz10imrQgR84D5ypq32UJO6M9/VC77ko1EuHyhVp53HidPaPX3h3/s2V87lVg4E29p5e2ZP77oGmhYzNA==",
-      "path": "oracle.entityframeworkcore/8.23.60",
-      "hashPath": "oracle.entityframeworkcore.8.23.60.nupkg.sha512"
+      "sha512": "sha512-vaYEUlF/pB9m8bs21wQv3Da0kMHT4A9USe47VfY/L2BO97xz5KfIxhEu22QS9d68ZrLxvtL3wQDfDLPr2OjbjA==",
+      "path": "npgsql/8.0.4",
+      "hashPath": "npgsql.8.0.4.nupkg.sha512"
     },
-    "Oracle.ManagedDataAccess.Core/23.6.0": {
+    "Npgsql.EntityFrameworkCore.PostgreSQL/8.0.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-dh9lSGv6DUU7e92HULZOFYdpRQuIPy6B4dlN5zT3eyhRU9lsVbu8CYdyB7yLAdPNx4Egpq75uP2Qcr98PhTbmg==",
-      "path": "oracle.manageddataaccess.core/23.6.0",
-      "hashPath": "oracle.manageddataaccess.core.23.6.0.nupkg.sha512"
+      "sha512": "sha512-D5WWJZJTgZYUmGv66BARXbTlinp2a5f5RueJqGYoHuWJw02J0i2va/RA+8N4A5hLORK5YKMRqXhFWtKsZdrksw==",
+      "path": "npgsql.entityframeworkcore.postgresql/8.0.8",
+      "hashPath": "npgsql.entityframeworkcore.postgresql.8.0.8.nupkg.sha512"
     },
     "RabbitMQ.Client/6.8.1": {
       "type": "package",
@@ -1227,47 +1145,12 @@
       "path": "system.composition.typedparts/6.0.0",
       "hashPath": "system.composition.typedparts.6.0.0.nupkg.sha512"
     },
-    "System.Configuration.ConfigurationManager/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-JlYi9XVvIREURRUlGMr1F6vOFLk7YSY4p1vHo4kX3tQ0AGrjqlRWHDi66ImHhy6qwXBG3BJ6Y1QlYQ+Qz6Xgww==",
-      "path": "system.configuration.configurationmanager/8.0.0",
-      "hashPath": "system.configuration.configurationmanager.8.0.0.nupkg.sha512"
-    },
     "System.Diagnostics.DiagnosticSource/8.0.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-c9xLpVz6PL9lp/djOWtk5KPDZq3cSYpmXoJQY524EOtuFl5z9ZtsotpsyrDW40U1DRnQSYvcPKEUV0X//u6gkQ==",
       "path": "system.diagnostics.diagnosticsource/8.0.0",
       "hashPath": "system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512"
-    },
-    "System.Diagnostics.EventLog/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-fdYxcRjQqTTacKId/2IECojlDSFvp7LP5N78+0z/xH7v/Tuw5ZAxu23Y6PTCRinqyu2ePx+Gn1098NC6jM6d+A==",
-      "path": "system.diagnostics.eventlog/8.0.0",
-      "hashPath": "system.diagnostics.eventlog.8.0.0.nupkg.sha512"
-    },
-    "System.Diagnostics.PerformanceCounter/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-lX6DXxtJqVGWw7N/QmVoiCyVQ+Q/Xp+jVXPr3gLK1jJExSn1qmAjJQeb8gnOYeeBTG3E3PmG1nu92eYj/TEjpg==",
-      "path": "system.diagnostics.performancecounter/8.0.0",
-      "hashPath": "system.diagnostics.performancecounter.8.0.0.nupkg.sha512"
-    },
-    "System.DirectoryServices.Protocols/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-puwJxURHDrYLGTQdsHyeMS72ClTqYa4lDYz6LHSbkZEk5hq8H8JfsO4MyYhB5BMMxg93jsQzLUwrnCumj11UIg==",
-      "path": "system.directoryservices.protocols/8.0.0",
-      "hashPath": "system.directoryservices.protocols.8.0.0.nupkg.sha512"
-    },
-    "System.Formats.Asn1/8.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-XqKba7Mm/koKSjKMfW82olQdmfbI5yqeoLV/tidRp7fbh5rmHAQ5raDI/7SU0swTzv+jgqtUGkzmFxuUg0it1A==",
-      "path": "system.formats.asn1/8.0.1",
-      "hashPath": "system.formats.asn1.8.0.1.nupkg.sha512"
     },
     "System.IO.Pipelines/6.0.3": {
       "type": "package",
@@ -1296,20 +1179,6 @@
       "sha512": "sha512-/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg==",
       "path": "system.runtime.compilerservices.unsafe/6.0.0",
       "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
-    },
-    "System.Security.Cryptography.Pkcs/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ULmp3xoOwNYjOYp4JZ2NK/6NdTgiN1GQXzVVN1njQ7LOZ0d0B9vyMnhyqbIi9Qw4JXj1JgCsitkTShboHRx7Eg==",
-      "path": "system.security.cryptography.pkcs/8.0.0",
-      "hashPath": "system.security.cryptography.pkcs.8.0.0.nupkg.sha512"
-    },
-    "System.Security.Cryptography.ProtectedData/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-+TUFINV2q2ifyXauQXRwy4CiBhqvDEDZeVJU7qfxya4aRYOKzVBpN+4acx25VcPB9ywUN6C0n8drWl110PhZEg==",
-      "path": "system.security.cryptography.protecteddata/8.0.0",
-      "hashPath": "system.security.cryptography.protecteddata.8.0.0.nupkg.sha512"
     },
     "System.Text.Encoding.CodePages/6.0.0": {
       "type": "package",

@@ -70,9 +70,9 @@
               "target": "Package",
               "version": "[8.0.10, )"
             },
-            "Oracle.EntityFrameworkCore": {
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[8.23.60, )"
+              "version": "[8.0.8, )"
             },
             "Serilog": {
               "target": "Package",

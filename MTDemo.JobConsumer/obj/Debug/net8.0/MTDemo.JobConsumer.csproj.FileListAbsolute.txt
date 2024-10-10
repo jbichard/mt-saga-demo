@@ -46,17 +46,6 @@ C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\Serilog.Settings.Config
 C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\Serilog.Sinks.Console.dll
 C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
 C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\Serilog.Sinks.File.dll
-C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\Oracle.EntityFrameworkCore.dll
-C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\Oracle.ManagedDataAccess.dll
-C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
-C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\System.Diagnostics.PerformanceCounter.dll
-C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\System.DirectoryServices.Protocols.dll
-C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\System.Formats.Asn1.dll
-C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
-C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.PerformanceCounter.dll
-C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\runtimes\linux\lib\net8.0\System.DirectoryServices.Protocols.dll
-C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\runtimes\osx\lib\net8.0\System.DirectoryServices.Protocols.dll
-C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.DirectoryServices.Protocols.dll
 C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\Humanizer.dll
 C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
@@ -129,3 +118,5 @@ C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\ru\Microsoft.CodeAnalys
 C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\Npgsql.dll
+C:\temp\mt-saga-demo\MTDemo.JobConsumer\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll

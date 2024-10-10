@@ -4,7 +4,7 @@ using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Oracle.EntityFrameworkCore.Metadata;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -18,38 +18,38 @@ namespace MTDemo.JobConsumer.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("MassTransit.JobAttemptSaga", b =>
                 {
                     b.Property<Guid>("CorrelationId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("CurrentState")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("Faulted")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("InstanceAddress")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<Guid>("JobId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("RetryAttempt")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ServiceAddress")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("Started")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("StatusCheckTokenId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.HasKey("CorrelationId");
 
@@ -62,52 +62,52 @@ namespace MTDemo.JobConsumer.Migrations
             modelBuilder.Entity("MassTransit.JobSaga", b =>
                 {
                     b.Property<Guid>("CorrelationId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("AttemptId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("Completed")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("CurrentState")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<TimeSpan?>("Duration")
-                        .HasColumnType("INTERVAL DAY(8) TO SECOND(7)");
+                        .HasColumnType("interval");
 
                     b.Property<DateTime?>("Faulted")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Job")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("JobRetryDelayToken")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("JobSlotWaitToken")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<TimeSpan?>("JobTimeout")
-                        .HasColumnType("INTERVAL DAY(8) TO SECOND(7)");
+                        .HasColumnType("interval");
 
                     b.Property<Guid>("JobTypeId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Reason")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<int>("RetryAttempt")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ServiceAddress")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("Started")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("Submitted")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("CorrelationId");
 
@@ -117,31 +117,31 @@ namespace MTDemo.JobConsumer.Migrations
             modelBuilder.Entity("MassTransit.JobTypeSaga", b =>
                 {
                     b.Property<Guid>("CorrelationId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("ActiveJobCount")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ActiveJobs")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<int>("ConcurrentJobLimit")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<int>("CurrentState")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Instances")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("OverrideJobLimit")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("OverrideLimitExpiration")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("CorrelationId");
 

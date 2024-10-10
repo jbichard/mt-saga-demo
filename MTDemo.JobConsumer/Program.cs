@@ -1,10 +1,8 @@
 using MassTransit;
-using MassTransit.Configuration;
 using MassTransit.Contracts.JobService;
 using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MTDemo.JobConsumer;
 using MTDemo.JobConsumer.SurveyImport;
 using Serilog;
 using Serilog.Events;
@@ -25,7 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSerilog();
 builder.Services.AddDbContext<JobServiceSagaDbContext>(optionsBuilder =>
 {
-	optionsBuilder.UseOracle("DATA SOURCE=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=aspen)));USER ID=mt_job;PASSWORD=mt_job", m =>
+	optionsBuilder.UseNpgsql("Server=localhost;Port=5432;user id=admin;password=root;database=mt_db;", m =>
 	{
 		m.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
 		m.MigrationsHistoryTable($"__{nameof(JobServiceSagaDbContext)}");
@@ -43,11 +41,12 @@ builder.Services.AddMassTransit(x =>
 	});
 
 	x.SetJobConsumerOptions();
+	//x.SetInMemorySagaRepositoryProvider();
 	x.AddJobSagaStateMachines(options => options.FinalizeCompleted = false)
 		.EntityFrameworkRepository(r =>
 		{
 			r.ExistingDbContext<JobServiceSagaDbContext>();
-			r.LockStatementProvider = new OracleLockStatementProvider();
+			r.UsePostgres();
 		});
 
 	x.SetKebabCaseEndpointNameFormatter();
@@ -73,16 +72,15 @@ app.MapGet("/", () =>
 	return "Hello World!";
 });
 
-app.MapPost("/import", async (HttpContext context, [FromServices] IBusControl bus) =>
+app.MapPost("/import", async (HttpContext context, [FromServices] IRequestClient<SurveyImportJob> client) =>
 {
 	var jobId = Guid.NewGuid();
 	var surveyImportId = Guid.NewGuid();
-	await bus.Publish<SubmitJob<SurveyImportJob>>(new
+	var response = await client.GetResponse<JobSubmissionAccepted>(new
 	{
-		JobId = jobId,
-		Job = new SurveyImportJob(SurveyImportId: surveyImportId)
+		surveyImportId
 	});
-	return jobId;
+	return response.Message.JobId;
 });
 
 app.Run();
