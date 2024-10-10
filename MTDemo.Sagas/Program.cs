@@ -5,12 +5,26 @@ using MTDemo.Sagas.Consumers;
 using MTDemo.Sagas.Contracts;
 using MTDemo.Sagas.Persistence;
 using MTDemo.Sagas.SagaStateMachines;
+using Serilog;
+using Serilog.Events;
 using System.Reflection;
 
+Log.Logger = new LoggerConfiguration()
+	.MinimumLevel.Information()
+	.MinimumLevel.Override("MassTransit", LogEventLevel.Debug)
+	.MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+	.MinimumLevel.Override("Microsoft.Hosting", LogEventLevel.Information)
+	.MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
+	.MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
+	.Enrich.FromLogContext()
+	.WriteTo.Console()
+	.CreateLogger();
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSerilog();
+
 builder.Services.AddMassTransit(x =>
 {
-
 	x.AddSagaStateMachine<SurveyImportSaga, SurveyImportState>()
 	 .EntityFrameworkRepository(r =>
 		{
@@ -18,7 +32,7 @@ builder.Services.AddMassTransit(x =>
 
 			r.AddDbContext<DbContext, SurveyImportSagaDbContext>((provider, builder) =>
 			{
-				builder.UseOracle("DATA SOURCE=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=aspen)));USER ID=mt_demo;PASSWORD=mt_demo", m =>
+				builder.UseNpgsql("Server=localhost;Port=5432;user id=admin;password=root;database=mt_db;", m =>
 				{
 					m.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
 					m.MigrationsHistoryTable($"__{nameof(SurveyImportSagaDbContext)}");
@@ -42,11 +56,6 @@ builder.Services.AddMassTransit(x =>
 });
 
 var app = builder.Build();
-
-app.MapGet("/", () =>
-{
-	return "Hello World!";
-});
 
 app.MapPost("/import", async (HttpContext context, [FromServices]IBusControl bus) =>
 {

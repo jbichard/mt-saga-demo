@@ -4,7 +4,7 @@ using MTDemo.Sagas.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Oracle.EntityFrameworkCore.Metadata;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -17,26 +17,26 @@ namespace MTDemo.Sagas.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("MTDemo.Sagas.SagaStateMachines.ConditionImportState", b =>
                 {
                     b.Property<string>("ConditionId")
                         .HasMaxLength(64)
-                        .HasColumnType("NVARCHAR2(64)");
+                        .HasColumnType("character varying(64)");
 
                     b.Property<Guid>("CorrelationId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Error")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
-                    b.Property<int>("IsImported")
-                        .HasColumnType("NUMBER(1)");
+                    b.Property<bool>("IsImported")
+                        .HasColumnType("boolean");
 
                     b.HasKey("ConditionId");
 
@@ -49,17 +49,17 @@ namespace MTDemo.Sagas.Migrations
                 {
                     b.Property<string>("QuestionId")
                         .HasMaxLength(64)
-                        .HasColumnType("NVARCHAR2(64)");
+                        .HasColumnType("character varying(64)");
 
                     b.Property<Guid>("CorrelationId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Error")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
-                    b.Property<int>("IsImported")
-                        .HasColumnType("NUMBER(1)");
+                    b.Property<bool>("IsImported")
+                        .HasColumnType("boolean");
 
                     b.HasKey("QuestionId");
 
@@ -71,33 +71,32 @@ namespace MTDemo.Sagas.Migrations
             modelBuilder.Entity("MTDemo.Sagas.SagaStateMachines.SurveyImportState", b =>
                 {
                     b.Property<Guid>("CorrelationId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("CurrentState")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("NVARCHAR2(64)");
+                        .HasColumnType("character varying(64)");
 
                     b.Property<Guid?>("GetImportDetailsRequestId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("ImportStartDate")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("RAW(8)");
+                        .HasColumnType("bytea");
 
                     b.Property<DateTime?>("SurveyImportDate")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("SurveyImportId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("SurveyPublishDate")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("CorrelationId");
 

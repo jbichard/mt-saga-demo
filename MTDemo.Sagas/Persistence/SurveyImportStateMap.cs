@@ -13,9 +13,6 @@ namespace MTDemo.Sagas.Persistence
 			var boolConverter = new ValueConverter<bool, int>(v => v ? 1 : 0, v => (v == 1));
 
 			entity.Property(x => x.CurrentState).HasMaxLength(64);
-			//entity.Property(x => x.ImportStartDate);
-			//entity.Property(x => x.SurveyImportDate);
-			//entity.Property(x => x.SurveyPublishDate);
 
 			// If using Optimistic concurrency, otherwise remove this property
 			entity.Property(x => x.RowVersion).IsRowVersion();
@@ -25,14 +22,14 @@ namespace MTDemo.Sagas.Persistence
 				x.HasKey(x => x.QuestionId);
 				x.Property(x => x.QuestionId).HasMaxLength(64);
 				x.Property(x => x.Error);
-				x.Property(x => x.IsImported).HasColumnType("NUMBER(1)").HasConversion(boolConverter);
+				x.Property(x => x.IsImported);
 			});
 			model.Entity<ConditionImportState>(x =>
 			{
 				x.HasKey(x => x.ConditionId);
 				x.Property(x => x.ConditionId).HasMaxLength(64);
 				x.Property(x => x.Error);
-				x.Property(x => x.IsImported).HasColumnType("NUMBER(1)").HasConversion(boolConverter);
+				x.Property(x => x.IsImported);
 			});
 
 			entity.HasMany(x => x.QuestionImportStates)

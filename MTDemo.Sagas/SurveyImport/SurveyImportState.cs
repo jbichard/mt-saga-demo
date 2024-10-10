@@ -20,7 +20,7 @@ namespace MTDemo.Sagas.SagaStateMachines
 		
 
 		// If using Optimistic concurrency, this property is required
-		public byte[] RowVersion { get; set; }
+		public byte[]? RowVersion { get; set; }
 	}
 
 	public class QuestionImportState

@@ -15,13 +15,14 @@ namespace MTDemo.Sagas.Migrations
                 name: "SurveyImportState",
                 columns: table => new
                 {
-                    CorrelationId = table.Column<Guid>(type: "RAW(16)", nullable: false),
-                    CurrentState = table.Column<string>(type: "NVARCHAR2(64)", maxLength: 64, nullable: false),
-                    SignedUri = table.Column<string>(type: "NVARCHAR2(256)", maxLength: 256, nullable: false),
-                    ImportStartDate = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: true),
-                    SurveyImportDate = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: true),
-                    SurveyPublishDate = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: true),
-                    RowVersion = table.Column<byte[]>(type: "RAW(8)", rowVersion: true, nullable: false)
+                    CorrelationId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CurrentState = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    SurveyImportId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ImportStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    SurveyImportDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    SurveyPublishDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    GetImportDetailsRequestId = table.Column<Guid>(type: "uuid", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "bytea", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,10 +33,10 @@ namespace MTDemo.Sagas.Migrations
                 name: "ConditionImportState",
                 columns: table => new
                 {
-                    ConditionId = table.Column<string>(type: "NVARCHAR2(64)", maxLength: 64, nullable: false),
-                    CorrelationId = table.Column<Guid>(type: "RAW(16)", nullable: false),
-                    IsImported = table.Column<int>(type: "NUMBER(1)", nullable: false),
-                    Error = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
+                    ConditionId = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    CorrelationId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsImported = table.Column<bool>(type: "boolean", nullable: false),
+                    Error = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,10 +53,10 @@ namespace MTDemo.Sagas.Migrations
                 name: "QuestionImportState",
                 columns: table => new
                 {
-                    QuestionId = table.Column<string>(type: "NVARCHAR2(64)", maxLength: 64, nullable: false),
-                    CorrelationId = table.Column<Guid>(type: "RAW(16)", nullable: false),
-                    IsImported = table.Column<int>(type: "NUMBER(1)", nullable: false),
-                    Error = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
+                    QuestionId = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    CorrelationId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsImported = table.Column<bool>(type: "boolean", nullable: false),
+                    Error = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
