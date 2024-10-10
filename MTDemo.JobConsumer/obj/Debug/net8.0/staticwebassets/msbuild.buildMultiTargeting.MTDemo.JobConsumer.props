@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\MTDemo.JobConsumer.props" />
-</Project>
