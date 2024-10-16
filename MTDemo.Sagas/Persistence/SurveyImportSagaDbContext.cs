@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MTDemo.Sagas.Persistence
 {
-    public class SurveyImportSagaDbContext(DbContextOptions options) : SagaDbContext(options)
+    public class SurveyImportSagaDbContext(DbContextOptions<SurveyImportSagaDbContext> options) : SagaDbContext(options)
     {
 		protected override IEnumerable<ISagaClassMap> Configurations
         {

@@ -2,9 +2,8 @@
 {
 	public class ImportDetailsResponse
 	{
-		public Guid SurveyImportId;
-		public Guid CorrelationId;
-		public string[] QuestionIds;
-		public string[] ConditionIds;
+		public Guid SurveyImportId { get; set; }
+		public string[] QuestionIds { get; set; }
+		public string[] ConditionIds { get; set; }
 	}
 }

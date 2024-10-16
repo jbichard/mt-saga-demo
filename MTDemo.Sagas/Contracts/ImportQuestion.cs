@@ -1,8 +1,10 @@
-﻿namespace MTDemo.Sagas.Contracts
+﻿using MTDemo.Sagas.SurveyImport;
+
+namespace MTDemo.Sagas.Contracts
 {
-	public class ImportQuestion
+	public class ImportQuestionCommand
 	{
-		public string QuestionId { get; set; }
-		public string QuestionText { get; set; }
+		public Guid SurveyImportId { get; set; }
+		public Question Question { get; set; }
 	}
 }

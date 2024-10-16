@@ -2,8 +2,8 @@
 {
 	public class QuestionImported
 	{
+		public Guid SurveyImportId { get; set; }
 		public string QuestionId { get; set; }
-		public bool Result { get; set; }
-		public string Error { get; set; }
+		public bool AllQuestionsComplete { get; set; }
 	}
 }

@@ -1,7 +1,7 @@
 ﻿namespace MTDemo.Sagas.Contracts
 {
-	public interface GetImportDetails
+	public class GetImportDetails
 	{
-		Guid SurveyImportId { get; }
+		public Guid SurveyImportId { get; set; }
 	}
 }

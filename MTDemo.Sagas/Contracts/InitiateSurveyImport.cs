@@ -2,5 +2,8 @@
 
 namespace MTDemo.Sagas.Contracts
 {
-	public record InitiateSurveyImport(Guid SurveyImportId);
+	public class InitiateSurveyImport
+	{
+		public Guid SurveyImportId { get; set; }
+	}
 }

@@ -1,46 +1,57 @@
 ﻿using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using MTDemo.Sagas.Contracts;
+using MTDemo.Sagas.Persistence;
 
 namespace MTDemo.Sagas.SagaStateMachines
 {
-	public class SurveyImportSaga : MassTransitStateMachine<SurveyImportState>
+	public class SurveyImportSaga : MassTransitStateMachine<SurveyImportSagaState>
 	{
 		public Event<InitiateSurveyImport> InitiateSurveyImport { get; private set; } = null!;
-
-		public Event<ImportDetailsResponse> ImportDetailsResponse { get; private set; } = null!;
+		public Event<QuestionImported> QuestionImported { get; private set; } = null!;
 
 		public State Initiated { get; private set; } = null!;
-		public State GettingImportDetails { get; private set; } = null!;
 		public State ImportingQuestions { get; private set; } = null!;
+		public State QuestionsImported { get; private set; } = null!;
 
-		public SurveyImportSaga()
+		public SurveyImportSaga(ILogger<SurveyImportSaga> logger)
 		{
 			InstanceState(x => x.CurrentState);
-			Event(() => InitiateSurveyImport, x => x.CorrelateById(context => context.Message.SurveyImportId));
-			Event(() => ImportDetailsResponse, x => {
-				x.CorrelateById(context => context.Message.SurveyImportId);
-			});
+			GlobalTopology.Send.UseCorrelationId<InitiateSurveyImport>(x => x.SurveyImportId);
+			GlobalTopology.Send.UseCorrelationId<QuestionImported>(x => x.SurveyImportId);
+			Event(() => InitiateSurveyImport);
+			Event(() => QuestionImported);
 
 			Initially(
 				When(InitiateSurveyImport)
 				.Then(x =>
 				{
-					x.Saga.SurveyImportId = x.Message.SurveyImportId;
+					logger.LogDebug("[{surveyImportId}]: Saga created", x.Message.SurveyImportId);
 					x.Saga.ImportStartDate = DateTime.UtcNow;
 				})
-				.TransitionTo(GettingImportDetails)
-				.PublishAsync(x => x.Init<GetImportDetails>( new { x.Saga.SurveyImportId }))
+				.TransitionTo(ImportingQuestions)
+				.Publish(x => new ImportQuestionsCommand() { SurveyImportId = x.Message.SurveyImportId })
 			);
 
-			During(GettingImportDetails,
-				When(ImportDetailsResponse)
+			During(ImportingQuestions,
+				When(QuestionImported)
 				.Then(x =>
 				{
-					x.Saga.QuestionImportStates = x.Message.QuestionIds.Select(id => new QuestionImportState() { QuestionId = id }).ToArray();
-					x.Saga.ConditionImportStates = x.Message.ConditionIds.Select(id => new ConditionImportState() { ConditionId = id }).ToArray();
+					logger.LogDebug("[{surveyImportId}]: Saga received Question Imported event - {questionId}", x.Message.SurveyImportId, x.Message.QuestionId);
 				})
-				//.Send(ImportQuestionsCommand)
-				.TransitionTo(ImportingQuestions)
+				.If(
+					x => x.Message.AllQuestionsComplete,
+					x => {
+						return x
+							.TransitionTo(QuestionsImported)
+							.Then(y =>
+							{
+								y.Saga.ImportEndDate = DateTime.UtcNow;
+
+								logger.LogDebug("[{surveyImportId}]: Saga completed", y.Message.SurveyImportId);
+							});
+					}
+				)
 			);
 		}
 	}

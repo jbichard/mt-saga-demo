@@ -2,6 +2,6 @@
 {
 	public class ImportQuestionsCommand
 	{
-
+		public Guid SurveyImportId { get; set; }
 	}
 }

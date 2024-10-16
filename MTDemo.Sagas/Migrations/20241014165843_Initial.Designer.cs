@@ -3,6 +3,7 @@ using System;
 using MTDemo.Sagas.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MTDemo.Sagas.Migrations
 {
     [DbContext(typeof(SurveyImportSagaDbContext))]
-    partial class SurveyImportSagaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241014165843_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,9 +34,6 @@ namespace MTDemo.Sagas.Migrations
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
-
-                    b.Property<DateTime?>("ImportEndDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("ImportStartDate")
                         .HasColumnType("timestamp with time zone");
