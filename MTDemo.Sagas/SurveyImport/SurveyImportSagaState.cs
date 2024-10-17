@@ -15,6 +15,7 @@ namespace MTDemo.Sagas.SagaStateMachines
 		public DateTime? SurveyImportDate { get; set; }
 		public DateTime? SurveyPublishDate { get; set; }
 		public DateTime? ImportEndDate { get; set; }
+		public bool Success { get; set; }
 
 		// If using Optimistic concurrency, this property is required
 		public byte[]? RowVersion { get; set; }

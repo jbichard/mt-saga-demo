@@ -7,10 +7,10 @@ namespace MTDemo.Sagas.SurveyImport
 	public class QuestionImport
 	{
 		public string QuestionId { get; set; }
+		public int Sequence { get; set; }
 		public bool IsImported { get; set; } = false;
 		public string? Error { get; set; }
 
 		public Guid SurveyImportId { get; set; }
-		public virtual SurveyImport SurveyImport { get; set; }
 	}
 }

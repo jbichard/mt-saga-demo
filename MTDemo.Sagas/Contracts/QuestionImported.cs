@@ -4,6 +4,7 @@
 	{
 		public Guid SurveyImportId { get; set; }
 		public string QuestionId { get; set; }
-		public bool AllQuestionsComplete { get; set; }
+		// Should only be set once all questions have been imported
+		public bool? IsSuccessful { get; set; }
 	}
 }

@@ -10,17 +10,6 @@ using Serilog;
 using Serilog.Events;
 using System.Reflection;
 
-//Log.Logger = new LoggerConfiguration()
-//	.MinimumLevel.Debug()
-//	.MinimumLevel.Override("MassTransit", LogEventLevel.Information)
-//	.MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-//	.MinimumLevel.Override("Microsoft.Hosting", LogEventLevel.Information)
-//	.MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
-//	.MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
-//	.Enrich.FromLogContext()
-//	.WriteTo.Console()
-//	.CreateLogger();
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((ctx, lc) => 
@@ -63,7 +52,7 @@ builder.Services.AddMassTransit(x =>
 			});
 		});
 
-	x.AddConsumer<ImportQuestionConsumer>(x => x.ConcurrentMessageLimit = 1);
+	x.AddConsumer<ImportQuestionConsumer>(x => x.ConcurrentMessageLimit = 5);
 	x.AddConsumer<ImportQuestionsConsumer>();
 
 	x.UsingRabbitMq((context, cfg) =>
@@ -72,6 +61,7 @@ builder.Services.AddMassTransit(x =>
 		{
 			hostConfigurator.Username("cr360_test_user");
 			hostConfigurator.Password("cr360_test_user");
+			hostConfigurator.ConfigureBatchPublish(x => x.Enabled = true);
 		}
 		);
 		cfg.Durable = true;
@@ -81,7 +71,7 @@ builder.Services.AddMassTransit(x =>
 
 var app = builder.Build();
 
-app.MapPost("/import", 
+app.MapPost("/imports", 
 	async (
 		HttpContext context,
 		[FromServices]IBusControl bus,
@@ -93,7 +83,7 @@ app.MapPost("/import",
 		var questions = new List<QuestionImport>();
 		for (var i = 1; i <= 10; i++)
 		{
-			questions.Add(new() { QuestionId = $"Q{i}" });
+			questions.Add(new() { QuestionId = Guid.NewGuid().ToString(), Sequence = i });
 		}
 
 		db.SurveyImports.Add(new SurveyImport()
@@ -104,6 +94,47 @@ app.MapPost("/import",
 		});
 		await db.SaveChangesAsync();
 		await bus.Publish<InitiateSurveyImport>(new() { SurveyImportId = surveyImportId });
+		logger.LogDebug("Survey import initiated: {SurveyImportId}", surveyImportId);
+		return surveyImportId;
+	}
+);
+
+app.MapGet("/imports/{surveyImportId}", 
+	async (
+		HttpContext context,
+		[FromServices]SurveyImportStateDbContext db,
+		Guid surveyImportId
+	) =>
+	{
+		var survey = await db.SurveyImports
+			.Where(x => x.SurveyImportId == surveyImportId)
+			.Include(x => x.Questions)
+			.FirstOrDefaultAsync();
+		return survey;
+	}
+);
+
+app.MapPost("/imports/{surveyImportId}/resume",
+	async (
+		HttpContext context,
+		[FromServices] IBusControl bus,
+		[FromServices] SurveyImportStateDbContext db,
+		[FromServices] ILogger<Program> logger,
+		Guid surveyImportId
+	) =>
+	{
+		var survey = await db.SurveyImports
+			.Where(x => x.SurveyImportId == surveyImportId)
+			.Include(x => x.Questions)
+			.FirstOrDefaultAsync();
+
+		bool? questionImportStatus = null;
+		if (!survey!.Questions.Any(q => !q.IsImported))
+		{
+			questionImportStatus = survey.Questions.All(q => q.Error == null);
+		}
+
+		await bus.Publish<ResumeImport>(new() { SurveyImportId = surveyImportId, IsQuestionImportSuccessful = questionImportStatus });
 		logger.LogDebug("Survey import initiated: {SurveyImportId}", surveyImportId);
 	}
 );
