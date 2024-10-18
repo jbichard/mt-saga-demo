@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace MTDemo.Sagas.Migrations.SurveyImportStateDb
+namespace MTDemo.Sagas.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,8 +15,8 @@ namespace MTDemo.Sagas.Migrations.SurveyImportStateDb
                 name: "SurveyImports",
                 columns: table => new
                 {
-                    SurveyImportId = table.Column<Guid>(type: "uuid", nullable: false),
-                    SurveyData = table.Column<string>(type: "text", nullable: false)
+                    SurveyImportId = table.Column<Guid>(type: "RAW(16)", nullable: false),
+                    SurveyData = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,14 +27,15 @@ namespace MTDemo.Sagas.Migrations.SurveyImportStateDb
                 name: "QuestionImport",
                 columns: table => new
                 {
-                    QuestionId = table.Column<string>(type: "text", nullable: false),
-                    IsImported = table.Column<bool>(type: "boolean", nullable: false),
-                    Error = table.Column<string>(type: "text", nullable: false),
-                    SurveyImportId = table.Column<Guid>(type: "uuid", nullable: false)
+                    QuestionId = table.Column<string>(type: "NVARCHAR2(450)", nullable: false),
+                    SurveyImportId = table.Column<Guid>(type: "RAW(16)", nullable: false),
+                    Sequence = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    IsImported = table.Column<int>(type: "NUMBER(1)", nullable: false),
+                    Error = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuestionImport", x => x.QuestionId);
+                    table.PrimaryKey("PK_QuestionImport", x => new { x.SurveyImportId, x.QuestionId });
                     table.ForeignKey(
                         name: "FK_QuestionImport_SurveyImports_SurveyImportId",
                         column: x => x.SurveyImportId,
@@ -42,11 +43,6 @@ namespace MTDemo.Sagas.Migrations.SurveyImportStateDb
                         principalColumn: "SurveyImportId",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QuestionImport_SurveyImportId",
-                table: "QuestionImport",
-                column: "SurveyImportId");
         }
 
         /// <inheritdoc />

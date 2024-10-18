@@ -26,7 +26,12 @@ builder.Host.UseSerilog((ctx, lc) =>
 
 builder.Services.AddDbContext<SurveyImportStateDbContext>((provider, builder) =>
 	{
-		builder.UseNpgsql("Server=localhost;Port=5432;user id=admin;password=root;database=mt_db;", m =>
+		//builder.UseNpgsql("Server=localhost;Port=5432;user id=admin;password=root;database=mt_db;", m =>
+		//{
+		//	m.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
+		//	m.MigrationsHistoryTable($"__{nameof(SurveyImportStateDbContext)}");
+		//});
+		builder.UseOracle("Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=aspen)));User Id=mt_demo;Password=mt_demo;", m =>
 		{
 			m.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
 			m.MigrationsHistoryTable($"__{nameof(SurveyImportStateDbContext)}");
@@ -44,11 +49,16 @@ builder.Services.AddMassTransit(x =>
 
 			r.AddDbContext<DbContext, SurveyImportSagaDbContext>((provider, builder) =>
 			{
-				builder.UseNpgsql("Server=localhost;Port=5432;user id=admin;password=root;database=mt_db;", m =>
+				builder.UseOracle("Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=aspen)));User Id=mt_demo;Password=mt_demo;", m =>
 				{
 					m.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
-					m.MigrationsHistoryTable($"__{nameof(SurveyImportSagaDbContext)}");
+					m.MigrationsHistoryTable($"__{nameof(SurveyImportStateDbContext)}");
 				});
+				//builder.UseNpgsql("Server=localhost;Port=5432;user id=admin;password=root;database=mt_db;", m =>
+				//{
+				//	m.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
+				//	m.MigrationsHistoryTable($"__{nameof(SurveyImportSagaDbContext)}");
+				//});
 			});
 		});
 

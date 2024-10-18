@@ -3,45 +3,43 @@ using System;
 using MTDemo.Sagas.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using Oracle.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace MTDemo.Sagas.Migrations.SurveyImportStateDb
+namespace MTDemo.Sagas.Migrations
 {
     [DbContext(typeof(SurveyImportStateDbContext))]
-    [Migration("20241014171041_NullableQuestionError")]
-    partial class NullableQuestionError
+    partial class SurveyImportStateDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("MTDemo.Sagas.SurveyImport.QuestionImport", b =>
                 {
+                    b.Property<Guid>("SurveyImportId")
+                        .HasColumnType("RAW(16)");
+
                     b.Property<string>("QuestionId")
-                        .HasColumnType("text");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.Property<string>("Error")
-                        .HasColumnType("text");
+                        .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<bool>("IsImported")
-                        .HasColumnType("boolean");
+                    b.Property<int>("IsImported")
+                        .HasColumnType("NUMBER(1)");
 
-                    b.Property<Guid>("SurveyImportId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Sequence")
+                        .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("QuestionId");
-
-                    b.HasIndex("SurveyImportId");
+                    b.HasKey("SurveyImportId", "QuestionId");
 
                     b.ToTable("QuestionImport");
                 });
@@ -50,11 +48,11 @@ namespace MTDemo.Sagas.Migrations.SurveyImportStateDb
                 {
                     b.Property<Guid>("SurveyImportId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("RAW(16)");
 
                     b.Property<string>("SurveyData")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("SurveyImportId");
 
@@ -63,13 +61,11 @@ namespace MTDemo.Sagas.Migrations.SurveyImportStateDb
 
             modelBuilder.Entity("MTDemo.Sagas.SurveyImport.QuestionImport", b =>
                 {
-                    b.HasOne("MTDemo.Sagas.SurveyImport.SurveyImport", "SurveyImport")
+                    b.HasOne("MTDemo.Sagas.SurveyImport.SurveyImport", null)
                         .WithMany("Questions")
                         .HasForeignKey("SurveyImportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("SurveyImport");
                 });
 
             modelBuilder.Entity("MTDemo.Sagas.SurveyImport.SurveyImport", b =>
